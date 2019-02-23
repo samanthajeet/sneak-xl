@@ -27,7 +27,9 @@ massive(CONNECTION_STRING).then(db => {
 
 
 const shoeCtrl = require('./shoeController');
-app.get('/api/user/shoes', shoeCtrl.getUserShoes)
+app.post('/api/user/shoes', shoeCtrl.getUserShoes);
+app.post('/api/user/addshoe', shoeCtrl.addShoe);
+app.delete('/api/user/shoes', shoeCtrl.deleteShoe)
 
 
 const userCtrl = require('./userController')

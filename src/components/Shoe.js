@@ -13,6 +13,8 @@ export default function(props) {
         <h3>{shoe.brand}</h3>
         <h5>${shoe.purchase_cost}</h5>
       </div>
+
+      <button onClick={() => props.deleteShoe(shoe.id)} >Delete</button> 
       
     
     </div>

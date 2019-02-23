@@ -36,6 +36,12 @@ module.exports = {
         authenticated: false
       })
     }
+  }, 
+
+    logout: (req, res) => {
+      req.session.destory();
+      res.status(200).send('Logged Out')
+    }
   
-  }
+  
 }

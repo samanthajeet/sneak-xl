@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { handleAuthRes } from './../ducks/actions';
+import { handleAuthRes } from './../ducks/userReducer';
+import './Login.css'
+import '../Fonts.css';
+
 
 class Login extends Component {
   constructor(){
     super();
     this.state = {
-      username: '',
-      password: '',
+      user: {}
     }
     this.handleLogin = this.handleLogin.bind(this)
   }
@@ -16,8 +18,11 @@ class Login extends Component {
   handleLogin(){
     const { username, password} = this.state;
     axios.post(`/api/login`, {username, password}).then( (res) => {
-      console.log(res.data.user.user_id )
       this.props.handleAuthRes( res.data)
+      this.setState({
+        user: res.data.user,
+      })
+      console.log(1111,this.state)
       if(res.data.authenticated){
         this.props.history.push('/user/dashboard')
       }
@@ -25,20 +30,36 @@ class Login extends Component {
   }
 
   render() { 
+
     return ( 
-      <div>
+      <div className="loginsite">
 
-        <p>Username</p>
-        <input
-          value={this.state.username}
-          onChange={ (e)=> this.setState({username: e.target.value}) }/>
+        <div className="landingimage">
+          <h1>Sneak_XL</h1>
+        </div>
 
-        <p>password</p>
-        <input
-          value={this.state.password}
-          onChange={ (e) => this.setState({password: e.target.value})} />
-        <button onClick={this.handleLogin} >Login</button>
+        <div className="login">
+          <div className="username">
+            <p>Username</p>
+            <div className="username-box" ></div>
+            <input
+              value={this.state.username}
+              type="type"
+              onChange={ (e)=> this.setState({username: e.target.value}) }
+            />
+          </div>
 
+          <div className="password">
+          <p>password</p>
+            <input
+              value={this.state.password}
+              type="password"
+              onChange={ (e) => this.setState({password: e.target.value})}
+            />
+          </div>
+            <button onClick={this.handleLogin} >Login</button>
+        </div>
+        
       </div>
      );
   }
@@ -50,6 +71,7 @@ function mapStateToProps(state) {
     authenticated,
     user
   }
+  
 }
  
 export default connect(mapStateToProps, {handleAuthRes})(Login) ;
